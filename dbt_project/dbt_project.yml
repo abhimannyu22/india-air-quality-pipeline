@@ -1,0 +1,10 @@
+name: india_air_quality
+version: "1.0.0"
+profile: india_air_quality
+
+models:
+  india_air_quality:
+    staging:
+      +materialized: view    # views store no data, just a saved query
+    marts:
+      +materialized: table   # tables are computed once and stored

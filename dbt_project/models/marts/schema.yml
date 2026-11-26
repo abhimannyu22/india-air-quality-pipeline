@@ -1,0 +1,53 @@
+version: 2
+
+models:
+  - name: dim_city
+    columns:
+      - name: city
+        data_tests: [unique, not_null]
+
+  - name: dim_station
+    columns:
+      - name: location_id
+        data_tests: [unique, not_null]
+      - name: city
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city
+
+  - name: dim_pollutant
+    columns:
+      - name: parameter
+        data_tests: [unique, not_null]
+
+  - name: fct_daily_readings
+    columns:
+      - name: reading_date
+        data_tests: [not_null]
+      - name: value
+        data_tests: [not_null]
+      - name: location_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_station')
+                field: location_id
+      - name: parameter
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('dim_pollutant')
+                field: parameter
+
+  - name: fct_daily_aqi
+    columns:
+      - name: aqi
+        data_tests: [not_null]
+      - name: aqi_category
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['Good', 'Satisfactory', 'Moderate', 'Poor', 'Very Poor', 'Severe']

@@ -1,0 +1,8 @@
+india_air_quality:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/warehouse.duckdb
+      schema: gold          # all dbt output goes into the "gold" schema
+      threads: 1
