@@ -1,0 +1,16 @@
+# Secrets: never commit
+.env
+
+# Virtual environment: anyone can recreate it from requirements.txt
+.venv/
+
+# Data files: the pipeline regenerates these, and they're too big for Git
+data/
+*.duckdb
+*.duckdb.wal
+
+# Python and dbt generated files
+__pycache__/
+target/
+dbt_packages/
+logs/
