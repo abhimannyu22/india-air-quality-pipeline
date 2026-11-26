@@ -1,0 +1,22 @@
+name: CI
+
+# Runs on every push and pull request
+on: [push, pull_request]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: pip install -r requirements.txt ruff
+      - name: Lint Python code
+        run: ruff check src
+      - name: Check dbt project is valid
+        run: |
+          mkdir -p data
+          cd dbt_project
+          dbt parse
