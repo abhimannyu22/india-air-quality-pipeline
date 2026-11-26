@@ -19,7 +19,7 @@ def get(path, params=None, max_retries=5):
             f"{BASE_URL}{path}", headers=HEADERS, params=params, timeout=30
         )
         if response.status_code == 200:
-            time.sleep(0.5)  # small pause so we stay under the rate limit
+            time.sleep(1.1)  # small pause so we stay under the rate limit
             return response.json()
         if response.status_code in (429, 500, 502, 503, 504):
             wait = 2 ** attempt  # 2, 4, 8, 16, 32 seconds (exponential backoff)
